@@ -1,0 +1,37 @@
+ //"test": "echo \"Error: no test specified\" && exit 1"
+
+
+
+doctype html
+html(lang="es")
+
+    head
+        title Notes
+        meta(charset="utf-8")
+        link(rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous")
+        link(rel="stylesheet", href="/public/css/main.css")
+    body
+        div(class="text-dark p-2 d-flex flex-column flex-md-row align-items-center p-3 px-md-4 mb-3 bg-white border-bottom shadow-sm")
+            
+            a(href="/" class="my-0 mr-md-auto font-weight-normal") AppFotos
+            nav(class="my-2 my-md-0 mr-md-3")
+                a(href="/app" class="p-2 text-dark") All
+                a(href="/app/images" class="p-2 text-dark") My Gallery
+                a(href="/app/images/new" class="p-2 text-dark") New Image
+                
+                
+                a(href="/login" class="btn btn-outline-primary") Login
+        block contenido
+        footer
+            .container
+                p
+                | &copy; 2019 |
+                i.fa.fa-value(aria-hidden='true') &nbsp;
+                a(href='#') View Source
+                p
+                    .float-right
+                        a(href="#", rel="noopener noreferrer") Back to top
+                //- <footer class="container">
+                        <p class="float-right"><a href="#">Back to top</a></p>
+                        <p>© 2017-2019 Company, Inc. · <a href="#">Privacy</a> · <a href="#">Terms</a></p>
+                    </footer>
