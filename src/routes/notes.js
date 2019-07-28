@@ -6,16 +6,17 @@ router.get('/notes/add', (req, res) => {
     res.render('notes/new-note');
 });
 
+//crear nueva Nota
 router.post('/notes/new-note', async (req, res)=>{
-    //validacioones de formulario
+    //validaciones de formulario
     const {title, description} = req.body;
     const errors =[];
     //valores enviados vacios
     if (!title) {
-        errors.push({text: 'Please Write a Title'})
+        errors.push({text: 'Please Write a Title'});
     }
     if (!description) {
-        errors.push({text: 'Please Write a Description'})
+        errors.push({text: 'Please Write a Description'});
     }
 
     //validaciones para mostrar errores
@@ -31,6 +32,8 @@ router.post('/notes/new-note', async (req, res)=>{
         const newNote =new Note({title, description});
         //guardar dato en mongodb
         await newNote.save();//await async method
+        //enviar mensaje de exito a la vista
+        req.flash('success_msg', 'Note Added Successfully');
         res.redirect('/notes');
     }
     
@@ -38,6 +41,7 @@ router.post('/notes/new-note', async (req, res)=>{
     //res.send('ok');
 });
 
+//Consultar todas las notas de la BD
 router.get('/notes', async (req, res )=>{
     await Note.find({}, (err, _notes) => {
         if(err){
@@ -50,6 +54,7 @@ router.get('/notes', async (req, res )=>{
     //res.send('Notas de la base de datos');
 });
 
+//editar Nota
 router.get("/notes/edit/:id", async (req, res) =>{   
     const _note = await Note.findById(req.params.id);
     //console.log(_note.description);
@@ -62,15 +67,18 @@ router.put("/notes/edit-note/:id", async (req, res) => {
     //obtener valores enviados del form
     const {title, description} = req.body;
     await Note.findByIdAndUpdate(req.params.id, {title, description});
-    
+    req.flash('success_msg', 'Note Updated Successfully');
     res.redirect('/notes');
 });
 
+//borrar nota
 router.delete("/notes/delete/:id", async (req, res) => {
     //actualizar una nota
 
     //obtener valores enviados del form
     await Note.findByIdAndDelete(req.params.id);
+    //enviar mensage se ha eliminado nota
+    req.flash('success_msg', 'Note Deleted Successfully');
     res.redirect('/notes');
 });
 

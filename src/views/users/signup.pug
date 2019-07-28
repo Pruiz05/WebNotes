@@ -1,0 +1,58 @@
+extends ../layouts/main.pug
+block contenido
+    //-if errors
+      each er in errors
+        div(class="alert alert-danger alert-dismissible fade show col-md-5 center-block remove-float mx-auto" role="alert")
+          text=er.text
+          button(class="close" type="button" data-dismiss="alert" aria-label="Close")
+            span(aria-hidden="true") &times;
+    include ../partials/error
+    - var _email = email
+    - var _user = username
+    - var _password = password
+    - var _confirm = confirm_password
+    div(class="col-md-5 remove-float mx-auto center-block big-top-space")
+        div(class="card")
+            div(class="card-header")
+                h3 Create Account
+            div(class="card-body")
+                form(action="/users/signup" method="POST")
+                    div(class="form-group")
+                        label(for="email") Email
+                        input(type="text", name="email", placeholder="Email", id="email", class="form-control", value=_email)
+                    div(class="form-group")
+                        label(for="username") User Name
+                        input(type="username", name="username", placeholder="username", id="username", class="form-control", value=_user)
+                    div(class="form-group")
+                        label(for="password") Password
+                        input(type="password", name="password", placeholder="Password", id="password", class="form-control", value=_password)
+                    div(class="form-group")
+                        label(for="password") Confirm Password
+                        input(type="password", name="password_confirmation", placeholder="Confirm password", id="password_confirmation", class="form-control", value=_confirm)        
+                    div(class="row form-group")
+                        div(class="col-sm-6")
+                            input(type="submit" , value="SignUp" class="btn btn-info")
+                        div(class="col-sm-6 text-right")
+                            a(href="/users/login") I have an Account
+
+
+
+    //-if errors
+      each er in errors
+        div(class="alert alert-danger alert-dismissible fade show col-md-5 center-block remove-float mx-auto" role="alert")
+          text=er.text
+          button(class="close" type="button" data-dismiss="alert" aria-label="Close")
+            span(aria-hidden="true") &times;
+    //-div(class="col-md-5 remove-float mx-auto center-block big-top-space")
+        div(class="card")
+            div(class="card-header")
+             h3 New Note
+            div(class="card-body")
+              form(action="/notes/new-note" method="POST" )
+                div(class="form-group")
+                  input(type="text", name="title" class="form-control" placeholder="Title")
+                //-a(href="#" class="btn btn-success") Add
+                div(class="form-group")
+                  textarea(name="description" class="form-control" placeholder="Description")
+                div(class="form-group")
+                  button(class="btn btn-success btn-block" type="submit")  Save 
