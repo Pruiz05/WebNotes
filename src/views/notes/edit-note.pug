@@ -1,0 +1,40 @@
+extends ../layouts/main.pug
+block contenido
+    if errors
+      each er in errors
+        div(class="alert alert-danger alert-dismissible fade show col-md-5 center-block remove-float mx-auto" role="alert")
+          text=er.text
+          button(class="close" type="button" data-dismiss="alert" aria-label="Close")
+            span(aria-hidden="true") &times;
+    div(class="col-md-5 remove-float mx-auto center-block big-top-space")
+        div(class="card")
+            div(class="card-header")
+             h3 Edit Note
+            div(class="card-body")
+              -var id = _note._id
+              form(action="/notes/edit-note/"+ id +"?_method=PUT" method="POST" )
+                input(type="hidden", name="_method" value="PUT")
+                -var title = _note.title
+                div(class="form-group")
+                  input(type="text", name="title", placeholder="Title", id="title", class="form-control", value=title)
+                -var description = _note.description
+                div(class="form-group")
+                  textarea(name="description" class="form-control")=description
+                div(class="form-group")
+                  button(class="btn btn-success btn-block" type="submit")  Save  
+
+
+
+
+
+        //-    div(class="col-md-5 remove-float mx-auto center-block big-top-space")
+                    h1 Editar una imagen
+                    -var id = image._id
+                    form(action="/app/images/"+id+"?_method=PUT" method="POST")
+                        -var title = image.title
+                        div(class="form-group")
+                            label(for="title") Título
+                            input(type="text", name="title", placeholder="Título de la imagen...", id="title", class="form-control",   value=title)
+                        div(class="row")
+                            div(class="col-sm-6")
+                                input(type="submit", value="Guardar" class="btn btn-success")

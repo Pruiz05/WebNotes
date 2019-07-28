@@ -1,5 +1,11 @@
 extends ../layouts/main.pug
 block contenido
+    if errors
+      each er in errors
+        div(class="alert alert-danger alert-dismissible fade show col-md-5 center-block remove-float mx-auto" role="alert")
+          text=er.text
+          button(class="close" type="button" data-dismiss="alert" aria-label="Close")
+            span(aria-hidden="true") &times;
     div(class="col-md-5 remove-float mx-auto center-block big-top-space")
         div(class="card")
             div(class="card-header")
@@ -12,7 +18,7 @@ block contenido
                 div(class="form-group")
                   textarea(name="description" class="form-control" placeholder="Description")
                 div(class="form-group")
-                  button(class="btn btn-success btn-block" type="submit") Save
+                  button(class="btn btn-success btn-block" type="submit")  Save  
                   //--for err in errors
                     div(class="alert alert-danger alert-dismissible fade show" role="alert")
                       -var texto = text
