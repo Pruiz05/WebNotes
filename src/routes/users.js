@@ -1,11 +1,21 @@
 const express = require('express');
 const router = express.Router();
 const User = require('../models/User');
+const passport = require('passport');
 
-/*  */
-router.get('/users/login', (req, res) => {
+
+/* Renderizar el Formulario  de inicio de sesion*/
+router.get('/users/signin', (req, res) => {
     res.render('users/signin');
 });
+
+
+router.post('/users/signin', passport.authenticate('local', {
+    successRedirect: '/notes',//login succes
+    failureRedirect: '/users/signin',//fallo en el login
+    failureFlash: true//mensajes flash
+}));
+
 
 /* Formulario de creacion de usuario */
 router.get('/users/signup', (req, res) => {
@@ -62,7 +72,7 @@ router.post('/users/signup', async (req, res) => {
             return;
         }
         //Crear nuevo usuario
-        const newUser = new User({ email, 
+        const newUser = new User({email, 
             username, 
             password });
         //utilizar el metodo para encriptar la contraseña
@@ -73,12 +83,12 @@ router.post('/users/signup', async (req, res) => {
         req.flash('success_msg', 'User Added Successfully');
         res.redirect('/');
     }
+});
 
-
-
-
-//    console.log(email);
-    //res.send('Nuevo usuario');
+/* Cerrar sesion */
+router.get('/users/logout', (req, res) => {
+    req.logOut();
+    res.redirect('/');
 });
 
 

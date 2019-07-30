@@ -4,10 +4,14 @@ const pug = require('pug');
 const methodOverride = require('method-override');
 const sesion = require('express-session');
 const flash = require('connect-flash');//enviar mensajes entre multiples vistas
+const passport = require('passport');
+
 
 //Initializations
 const app = express();
 require('./database');
+require('./config/passport');
+
 
 //config 
 app.set('port', process.env.Port || 3000);
@@ -25,8 +29,13 @@ app.use(sesion({
     saveUninitialized: true
 }));//autenticar usuarios
 
+//manejo de sesiones con passport
+app.use(passport.initialize());
+app.use(passport.session())
+
 //usando flash 
 app.use(flash());
+
 
 //global variables
 
@@ -34,6 +43,7 @@ app.use(flash());
 app.use((req, res, next) => {
     res.locals.success_msg = req.flash('success_msg');//success_msg
     res.locals.error_msg = req.flash('error_msg');
+    res.locals.error = req.flash('error');
     next();
 });
 //Routes

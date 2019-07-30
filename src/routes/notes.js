@@ -10,22 +10,25 @@ router.get('/notes/add', (req, res) => {
 router.post('/notes/new-note', async (req, res)=>{
     //validaciones de formulario
     const {title, description} = req.body;
-    const errors =[];
+    const errors =[]; //arreglo de errores
     //valores enviados vacios
     if (!title) {
+        //enviar errores a la vista .pug
         errors.push({text: 'Please Write a Title'});
     }
     if (!description) {
+        //enviar errores a la vista .pug
         errors.push({text: 'Please Write a Description'});
     }
 
     //validaciones para mostrar errores
     if(errors.length > 0){
         res.render('notes/new-note', {
+            //enviar errores y los datos a la vista .pug
             errors, 
             title,
             description
-        })
+        });
     }else{
         //res.send('ok');
         //Crear nueva nota

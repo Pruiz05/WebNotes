@@ -4,3 +4,15 @@ if errors
           text=er.text
           button(class="close" type="button" data-dismiss="alert" aria-label="Close")
             span(aria-hidden="true") &times;
+
+if error_msg.length > 0
+    div(class="alert alert-danger alert-dismissible fade show col-md-5 center-block remove-float mx-auto" role="alert")
+        text=error_msg
+        button(class="close" type="button" data-dismiss="alert" aria-label="Close")
+            span(aria-hidden="true") &times;
+//-alerta inicio de sesion erroneo
+if error > 0
+  div(class="alert alert-danger alert-dismissible fade show col-md-5 center-block remove-float mx-auto" role="alert")
+        text=error
+        button(class="close" type="button" data-dismiss="alert" aria-label="Close")
+            span(aria-hidden="true") &times;

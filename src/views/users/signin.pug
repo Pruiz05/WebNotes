@@ -1,15 +1,24 @@
 extends ../layouts/main.pug
 block contenido
+    if success_msg.length > 0
+        div(class="alert alert-success alert-dismissible fade show col-md-5 center-block remove-float mx-auto" role="alert")
+            text=success_msg
+            button(class="close" type="button" data-dismiss="alert" aria-label="Close")
+                span(aria-hidden="true") &times;
     div(class="col-md-5 remove-float mx-auto center-block big-top-space")
-        form(action="/sessions" method="POST")
-            div(class="form-group")
-                label(for="email") Email
-                input(type="text", name="email", placeholder="Email", id="email", class="form-control")
-            div(class="form-group")
-                label(for="password") Password
-                input(type="password", name="password", placeholder="Password", id="password", class="form-control")
-            div(class="row form-group")
-                div(class="col-sm-6")
-                    input(type="submit" , value="Login" class="btn btn-info")
-                div(class="col-sm-6 text-right")
-                    a(href="/users/signup") Create Account
+        div(class="card")
+            div(class="card-header")
+                h3 Create Account
+            div(class="card-body")
+                form(action="/users/signin" method="POST")
+                    div(class="form-group")
+                        label(for="email") Email
+                        input(type="text", name="email", placeholder="Email", id="email", class="form-control")
+                    div(class="form-group")
+                        label(for="password") Password
+                        input(type="password", name="password", placeholder="Password", id="password", class="form-control")
+                    div(class="row form-group")
+                        div(class="col-sm-6")
+                            input(type="submit" , value="Login" class="btn btn-info")
+                        div(class="col-sm-6 text-right")
+                            a(href="/users/signup") Create Account
