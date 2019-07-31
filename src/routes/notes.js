@@ -1,13 +1,16 @@
 const express = require('express');
 const router = express.Router();
-const Note = require('../models/Note.js');
 
-router.get('/notes/add', (req, res) => {
+const Note = require('../models/Note.js');
+const { isAuthenticated } = require('../helpers/auth');
+ 
+
+router.get('/notes/add', isAuthenticated, (req, res) => {
     res.render('notes/new-note');
 });
 
 //crear nueva Nota
-router.post('/notes/new-note', async (req, res)=>{
+router.post('/notes/new-note', isAuthenticated, async (req, res)=>{
     //validaciones de formulario
     const {title, description} = req.body;
     const errors =[]; //arreglo de errores
@@ -33,6 +36,7 @@ router.post('/notes/new-note', async (req, res)=>{
         //res.send('ok');
         //Crear nueva nota
         const newNote =new Note({title, description});
+        newNote.user = req.user.id;
         //guardar dato en mongodb
         await newNote.save();//await async method
         //enviar mensaje de exito a la vista
@@ -45,8 +49,8 @@ router.post('/notes/new-note', async (req, res)=>{
 });
 
 //Consultar todas las notas de la BD
-router.get('/notes', async (req, res )=>{
-    await Note.find({}, (err, _notes) => {
+router.get('/notes', isAuthenticated,  async (req, res )=>{
+    await Note.find({ user: req.user.id }, (err, _notes) => {
         if(err){
            console.log('error ' + err);
            return; 
@@ -58,13 +62,13 @@ router.get('/notes', async (req, res )=>{
 });
 
 //editar Nota
-router.get("/notes/edit/:id", async (req, res) =>{   
+router.get("/notes/edit/:id", isAuthenticated, async (req, res) =>{   
     const _note = await Note.findById(req.params.id);
     //console.log(_note.description);
     res.render('../views/notes/edit-note', {_note});
 });
 
-router.put("/notes/edit-note/:id", async (req, res) => {
+router.put("/notes/edit-note/:id", isAuthenticated, async (req, res) => {
     //actualizar una nota
 
     //obtener valores enviados del form
@@ -75,7 +79,7 @@ router.put("/notes/edit-note/:id", async (req, res) => {
 });
 
 //borrar nota
-router.delete("/notes/delete/:id", async (req, res) => {
+router.delete("/notes/delete/:id", isAuthenticated, async (req, res) => {
     //actualizar una nota
 
     //obtener valores enviados del form

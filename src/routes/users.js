@@ -3,6 +3,8 @@ const router = express.Router();
 const User = require('../models/User');
 const passport = require('passport');
 
+const { isAuthenticated } = require('../helpers/auth');
+
 
 /* Renderizar el Formulario  de inicio de sesion*/
 router.get('/users/signin', (req, res) => {
@@ -64,11 +66,11 @@ router.post('/users/signup', async (req, res) => {
     } else {
         //res.send('ok');
         //validar correo
-        const emailUser = User.findOne({email: email});
-        //console.log(emailUser);
+        const emailUser = await User.findOne({email: email});
+        console.log(email);
         if (emailUser) {
             req.flash('error_msg', 'The Email is already in use.');
-            res.redirect('/users/signup');
+            res.render('users/signup');
             return;
         }
         //Crear nuevo usuario
@@ -86,8 +88,8 @@ router.post('/users/signup', async (req, res) => {
 });
 
 /* Cerrar sesion */
-router.get('/users/logout', (req, res) => {
-    req.logOut();
+router.get('/users/logout', isAuthenticated, (req, res) => {
+    req.logOut();//passport
     res.redirect('/');
 });
 

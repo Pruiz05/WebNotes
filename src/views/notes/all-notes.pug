@@ -21,6 +21,7 @@ block contenido
                                     p Creado por #{image.creator.email}
                 else
                     div(class="card mx-auto")
+                        h4(class='mx-auto')= 'Hello ' + user.username
                         div(class="card-body")
                             p(class="lead") There are not notes yet.
                             a(href="/notes/add" class="btn btn-success btn-block") Create One

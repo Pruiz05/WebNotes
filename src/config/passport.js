@@ -9,9 +9,13 @@ const User = require('../models/User');
 passport.use(new LocalStrategy({
     usernameField: 'email'
 }, async(email, password, done) => {
+    //console.log(email);
+
+    
     const user = await User.findOne({email: email});
     if(!user){
         //termina el proceso de autenticacion
+        //no se ha encontrado usuario en la BD
         return done(null, false, {message: 'Not User Found'});
     }else{
         //validar la contraseña que se ha ingresado en el login con el metodo encriptado

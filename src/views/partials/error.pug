@@ -16,3 +16,9 @@ if error > 0
         text=error
         button(class="close" type="button" data-dismiss="alert" aria-label="Close")
             span(aria-hidden="true") &times;
+
+//-if message > 0
+  div(class="alert alert-danger alert-dismissible fade show col-md-5 center-block remove-float mx-auto" role="alert")
+        text=message
+        button(class="close" type="button" data-dismiss="alert" aria-label="Close")
+            span(aria-hidden="true") &times;
